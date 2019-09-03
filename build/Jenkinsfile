@@ -9,10 +9,10 @@ pipeline {
     stages {
         stage('Dev Test') {
             steps {
-                withDockerContainer(args: 'deploy --stage test', image: 'intelygenz/serverless:1.32.0')
+                withDockerContainer(args: 'deploy --stage test', image: 'mattermost/mattermost-marketplace-build:sep-3-2019')
                 withDockerContainer(args: '''
                     invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
-                ''', image: 'intelygenz/serverless:1.32.0')
+                ''', image: 'mattermost/mattermost-marketplace-build:sep-3-2019')
             }
         }
 
@@ -22,7 +22,7 @@ pipeline {
         /*     } } */
 
         /*     steps { */	
-        /*         withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') { */
+        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-3-2019') { */
         /*             sh ''' */
         /*                 serverless deploy --stage staging --region us-east-1' */
         /*                 serverless invoke --stage staging --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
@@ -37,7 +37,7 @@ pipeline {
         /*     } } */
 
         /*     steps { */	
-        /*         withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') { */
+        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-3-2019') { */
         /*             sh ''' */
         /*                 serverless deploy --stage production --region us-east-1' */
         /*                 serverless invoke --stage production --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
@@ -48,7 +48,7 @@ pipeline {
 
 	stage('Teardown') {
 	    steps {
-                withDockerContainer(args: 'remove --stage test', image: 'intelygenz/serverless:1.32.0')
+                withDockerContainer(args: 'remove --stage test', image: 'mattermost/mattermost-marketplace-build:sep-3-2019')
             }
 	}
     }
