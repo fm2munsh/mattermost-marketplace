@@ -7,58 +7,48 @@ pipeline {
     /* } */
 
     stages {
-        stage('Setup') {
-            steps {				
-                sh 'serverless --help' // to ensure it is installed
-            }
-        }			
-
         stage('Dev Test') {
             steps {
-                withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') {
-                    sh '''
-                        serverless deploy --stage test
-                        serverless invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
-                    '''
-                }
+                withDockerContainer(args: 'deploy --stage test', image: 'intelygenz/serverless:1.32.0')
+                withDockerContainer(args: '''
+                    invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
+                ''', image: 'intelygenz/serverless:1.32.0')
             }
         }
 
-        stage('Staging') {
-            when { expression {
-                env.BRANCH_NAME == 'staging'	
-            } }
+        /* stage('Staging') { */
+        /*     when { expression { */
+        /*         env.BRANCH_NAME == 'staging' */	
+        /*     } } */
 
-            steps {	
-                withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') {
-                    sh '''
-                        serverless deploy --stage staging --region us-east-1'
-                        serverless invoke --stage staging --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
-                    '''
-                }
-            }
-        }
+        /*     steps { */	
+        /*         withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') { */
+        /*             sh ''' */
+        /*                 serverless deploy --stage staging --region us-east-1' */
+        /*                 serverless invoke --stage staging --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
+        /*             ''' */
+        /*         } */
+        /*     } */
+        /* } */
 
-        stage('Production') {
-            when { expression {
-                env.BRANCH_NAME == 'production'	
-            } }
+        /* stage('Production') { */
+        /*     when { expression { */
+        /*         env.BRANCH_NAME == 'production' */	
+        /*     } } */
 
-            steps {	
-                withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') {
-                    sh '''
-                        serverless deploy --stage production --region us-east-1'
-                        serverless invoke --stage production --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
-                    '''
-                }
-            }
-        }
+        /*     steps { */	
+        /*         withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') { */
+        /*             sh ''' */
+        /*                 serverless deploy --stage production --region us-east-1' */
+        /*                 serverless invoke --stage production --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
+        /*             ''' */
+        /*         } */
+        /*     } */
+        /* } */
 
 	stage('Teardown') {
 	    steps {
-                withDockerContainer(args: '', image: 'intelygenz/serverless:1.32.0') {
-                    sh 'serverless remove --stage test'
-                }
+                withDockerContainer(args: 'remove --stage test', image: 'intelygenz/serverless:1.32.0')
             }
 	}
     }
