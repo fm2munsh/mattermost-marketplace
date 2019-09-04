@@ -1,5 +1,9 @@
 pipeline {
-    agent any	 
+    agent {
+        docker {
+            image 'mattermost/mattermost-marketplace-build:sep-3-2019'
+        }
+    }
 
     /* environment { */
     /*     AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID') */
@@ -7,11 +11,9 @@ pipeline {
     /* } */
 
     stages {
-        stage('Dev Test') {
+        stage('Test') {
             steps {
-                withDockerContainer(image: 'mattermost/mattermost-marketplace-build:sep-3-2019') {
-                    sh 'serverless deploy --verbose --stage test'
-                }
+                sh 'serverless deploy --verbose --stage test'
                 /* withDockerContainer(args: ''' */
                 /*     invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
                 /* ''', image: 'mattermost/mattermost-marketplace-build:sep-3-2019') */
@@ -50,7 +52,7 @@ pipeline {
 
 	stage('Teardown') {
 	    steps {
-                withDockerContainer(args: 'remove --stage test', image: 'mattermost/mattermost-marketplace-build:sep-3-2019')
+                sh 'serverless remove --stage test'
             }
 	}
     }
