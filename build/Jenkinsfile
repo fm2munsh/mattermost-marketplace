@@ -1,8 +1,6 @@
 pipeline {
     agent {
-        docker {
-            image 'mattermost/mattermost-marketplace-build:sep-3-2019'
-        }
+        any
     }
 
     /* environment { */
@@ -13,7 +11,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'serverless deploy --verbose --stage test'
+                sh 'docker run --rm mattermost/mattermost-marketplace-build:sep-3-2019 deploy --verbose --stage test'
                 /* withDockerContainer(args: ''' */
                 /*     invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
                 /* ''', image: 'mattermost/mattermost-marketplace-build:sep-3-2019') */
@@ -52,7 +50,7 @@ pipeline {
 
 	stage('Teardown') {
 	    steps {
-                sh 'serverless remove --stage test'
+                sh 'docker run --rm mattermost/mattermost-marketplace-build:sep-3-2019 remove --verbose --stage test'
             }
 	}
     }
