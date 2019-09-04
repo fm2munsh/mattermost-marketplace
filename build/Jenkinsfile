@@ -10,7 +10,7 @@ pipeline {
         stage('Dev Test') {
             steps {
                 withDockerContainer(image: 'mattermost/mattermost-marketplace-build:sep-3-2019') {
-                    sh 'severless deploy --stage test'
+                    sh 'serverless deploy --verbose --stage test'
                 }
                 /* withDockerContainer(args: ''' */
                 /*     invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
