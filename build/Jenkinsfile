@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Dev Test') {
             steps {
-                withDockerContainer(image: 'golang:1.12') {
+                withDockerContainer(image: 'golang:1.12', args: '-u root --privileged -v ${WORKSPACE}/src:/go/src/') {
                     sh '''
                         make build-lambda
                     '''
