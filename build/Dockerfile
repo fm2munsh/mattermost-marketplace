@@ -13,5 +13,3 @@ RUN pip install awscli
 ARG SERVERLESS_VERSION=1.28.0
 
 RUN npm install serverless@$SERVERLESS_VERSION -g --silent
-
-ENTRYPOINT ["serverless"]

@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent any	 
 
     /* environment { */
     /*     AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID') */
@@ -7,12 +7,12 @@ pipeline {
     /* } */
 
     stages {
-        stage('Test') {
+        stage('Dev Test') {
             steps {
-                sh 'docker run --rm mattermost/mattermost-marketplace-build:sep-3-2019 deploy --verbose --stage test'
-                /* withDockerContainer(args: ''' */
-                /*     invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
-                /* ''', image: 'mattermost/mattermost-marketplace-build:sep-3-2019') */
+                withDockerContainer(args: 'deploy --stage test', image: 'mattermost/mattermost-marketplace-build:sep-11-2019')
+                withDockerContainer(args: '''
+                    invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
+                ''', image: 'mattermost/mattermost-marketplace-build:sep-11-2019')
             }
         }
 
@@ -22,7 +22,7 @@ pipeline {
         /*     } } */
 
         /*     steps { */	
-        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-3-2019') { */
+        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-11-2019') { */
         /*             sh ''' */
         /*                 serverless deploy --stage staging --region us-east-1' */
         /*                 serverless invoke --stage staging --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
@@ -37,7 +37,7 @@ pipeline {
         /*     } } */
 
         /*     steps { */	
-        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-3-2019') { */
+        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-11-2019') { */
         /*             sh ''' */
         /*                 serverless deploy --stage production --region us-east-1' */
         /*                 serverless invoke --stage production --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
@@ -48,7 +48,7 @@ pipeline {
 
 	stage('Teardown') {
 	    steps {
-                sh 'docker run --rm mattermost/mattermost-marketplace-build:sep-3-2019 remove --verbose --stage test'
+                withDockerContainer(args: 'remove --stage test', image: 'mattermost/mattermost-marketplace-build:sep-11-2019')
             }
 	}
     }
