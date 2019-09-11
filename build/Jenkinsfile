@@ -14,6 +14,8 @@ pipeline {
         stage('Dev Test') {
             steps {
                 sh '''
+                    pwd
+                    ls -la
                     serverless deploy --stage test
                     serverless invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
                 '''
