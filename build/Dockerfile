@@ -1,7 +1,6 @@
 FROM node:8-alpine
 
-
-RUN apk add --update curl python-dev py-pip screen gpgme && \
+RUN apk add --update curl python-dev py-pip screen gpgme make && \
     pip install --upgrade pip && \
     rm -rf /var/cache/apk/*
 
