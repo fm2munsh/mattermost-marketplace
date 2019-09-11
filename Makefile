@@ -1,3 +1,5 @@
+SERVERLESS_STAGE ?= dev
+
 export GO111MODULE=on
 
 ## Checks the code style, tests, builds and bundles.
@@ -53,12 +55,12 @@ build-lambda: generate
 ## Deploy the lambda stack
 .PHONY: deploy-lambda
 deploy-lambda: clean build-lambda
-	sls deploy --verbose
+	sls deploy --verbose --stage=$(SERVERLESS_STAGE)
 
 ## Deploy the lambda function only to an existing stack
 .PHONY: deploy-lambda-fast
 deploy-lambda-fast: clean build-lambda
-	sls deploy function -f server
+	sls deploy function -f server --stage=$(SERVERLESS_STAGE)
 
 ## Clean all generated files
 .PHONY: clean
