@@ -8,16 +8,18 @@ pipeline {
 
     stages {
         stage('Dev Test') {
-            withDockerContainer(image: 'golang:1.12') {
-                sh '''
-                    make build-lambda
-                '''
-            }
-            withDockerContainer(image: 'mattermost/mattermost-marketplace-build:sep-12-2019') {
-                sh '''
-                    SERVERLESS_STAGE=test make deploy-lambda
-                    serverless invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
-                '''
+            steps {
+                withDockerContainer(image: 'golang:1.12') {
+                    sh '''
+                        make build-lambda
+                    '''
+                }
+                withDockerContainer(image: 'mattermost/mattermost-marketplace-build:sep-12-2019') {
+                    sh '''
+                        SERVERLESS_STAGE=test make deploy-lambda
+                        serverless invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
+                    '''
+                }
             }
         }
 
