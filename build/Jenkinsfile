@@ -13,8 +13,10 @@ pipeline {
     stages {
         stage('Dev Test') {
             steps {
-                serverless deploy --stage test
-                serverless invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
+                sh '''
+                    serverless deploy --stage test
+                    serverless invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
+                '''
             }
         }
 
@@ -50,7 +52,9 @@ pipeline {
 
 	stage('Teardown') {
 	    steps {
-                serverless remove --stage test
+                sh '''
+                    serverless remove --stage test
+                '''
             }
 	}
     }
