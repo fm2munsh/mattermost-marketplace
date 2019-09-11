@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'mattermost/mattermost-marketplace-build:sep-11-2019'
+            image 'mattermost/mattermost-marketplace-build:sep-12-2019'
         }
     }
 
@@ -28,7 +28,7 @@ pipeline {
         /*     } } */
 
         /*     steps { */	
-        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-11-2019') { */
+        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-12-2019') { */
         /*             sh ''' */
         /*                 serverless deploy --stage staging --region us-east-1' */
         /*                 serverless invoke --stage staging --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
@@ -43,7 +43,7 @@ pipeline {
         /*     } } */
 
         /*     steps { */	
-        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-11-2019') { */
+        /*         withDockerContainer(args: '', image: 'mattermost/mattermost-marketplace-build:sep-12-2019') { */
         /*             sh ''' */
         /*                 serverless deploy --stage production --region us-east-1' */
         /*                 serverless invoke --stage production --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}' */
