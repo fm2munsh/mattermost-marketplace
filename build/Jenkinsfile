@@ -11,7 +11,7 @@ pipeline {
             withDockerContainer(image: 'golang:1.12') {
                 sh '''
                     make build-lambda
-                ```
+                '''
             }
             withDockerContainer(image: 'mattermost/mattermost-marketplace-build:sep-12-2019') {
                 sh '''
