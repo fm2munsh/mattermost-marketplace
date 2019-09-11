@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'mattermost/mattermost-marketplace-build:sep-12-2019'
+    agent 'any'
         }
     }
 
@@ -12,10 +10,13 @@ pipeline {
 
     stages {
         stage('Dev Test') {
-            steps {
+            withDockerContainer(image: 'golang:1.12') {
                 sh '''
-                    pwd
-                    ls -la
+                    make build-lambda
+                ```
+            }
+            withDockerContainer(image: 'mattermost/mattermost-marketplace-build:sep-12-2019') {
+                sh '''
                     SERVERLESS_STAGE=test make deploy-lambda
                     serverless invoke --stage test --function server --data '{"PathParameters":{"proxy":"/api/v1/plugins"}, "httpMethod": "GET"}'
                 '''
@@ -54,9 +55,11 @@ pipeline {
 
 	stage('Teardown') {
 	    steps {
-                sh '''
-                    serverless remove --stage test
-                '''
+                withDockerContainer(image: 'mattermost/mattermost-marketplace-build:sep-12-2019') {
+                    sh '''
+                        serverless remove --stage test
+                    '''
+                }
             }
 	}
     }
