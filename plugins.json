@@ -591,7 +591,7 @@
     "icon_data": "",
     "download_url": "https://github.com/mattermost/mattermost-plugin-welcomebot/releases/download/v1.0.0/com.mattermost.welcomebot-1.0.0.tar.gz",
     "release_notes_url": "https://github.com/mattermost/mattermost-plugin-welcomebot/releases/tag/v1.0.0",
-    "signature": "",
+    "signature": "iQGzBAABCAAdFiEE8/rOReDeZCyL1qjmTHxlYsGSzB8FAl3WrscACgkQTHxlYsGSzB/e/wv/Ti7RyQ4ny2+JI7kMlteLR2VwXcwJeg0f8bXpB9i5bDj6+kimrliuyGZfMSRSer/ShLtsXT67qkYV66SL1ygFrrmk00k+/h6UVjbeiiR/rIxq3LCMzzoHntTHze65mF0Pk/BaQAaead98jE5Ahn2u0wOj12sLS6bK0cmHo5fUC7X+NmseO6zDml4US5nFteUE4ix7VtJZMd3OaBXJBCMHiokWTX8ijyGaGRjTIHTaQ/1aLWl+F+iO8EMhPMDy6LGUC4dEEHHrUntw3vitV3ZkMECRj1TnKHPo5L9egvEc4DBhgq/YBKWGKAG/04WfOJypAA0pMWyen6sJQBycoEPmPNQeQt8La8pPQGoRvVITUUDVC6pOmFYDMM7L2+blGPYqmM9S3wMCKGBKaylEzZFQeuRXdfXcgARk6CBu0KFhcXiwtUGW7gWIRmRYUwZPPDq7epCPlEGWp4McBYTtdd1l0Nq9cjtT0pTzyHFwOmaw5rE0JPVk22MC1XwFnLNbIdEC",
     "manifest": {
       "id": "com.mattermost.welcomebot",
       "name": "Welcome Bot",
